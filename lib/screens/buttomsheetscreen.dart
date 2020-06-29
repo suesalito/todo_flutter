@@ -12,7 +12,7 @@ class ButtomSheetScreen extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      height: (MediaQuery.of(context).size.height * 0.6),
+      height: (MediaQuery.of(context).size.height * 0.7),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -28,8 +28,9 @@ class ButtomSheetScreen extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(25),
               child: TextField(
+                autofocus: true, // make the input curcor active right away
                 cursorColor: Colors.cyan,
                 onChanged: (value) {
                   print(value);
@@ -43,7 +44,7 @@ class ButtomSheetScreen extends StatelessWidget {
               color: Colors.pink[200],
               child: const Text(
                 'Add',
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(fontSize: 22, color: Colors.white),
               ),
               onPressed: () => Navigator.pop(context),
             )
