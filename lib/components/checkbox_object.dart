@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
-class CheckBoxObject extends StatefulWidget {
-  const CheckBoxObject({Key key, @required this.checkBoxText}) : super(key: key);
+class CheckBoxObject extends StatelessWidget {
+  const CheckBoxObject({Key key, @required this.checkBoxText, @required this.checkValue, @required this.toggleCallBack})
+      : super(key: key);
 
   final String checkBoxText;
+  final ValueChanged<bool> toggleCallBack;
 
-  @override
-  _CheckBoxObjectState createState() => _CheckBoxObjectState();
-}
+//   @override
+//   _CheckBoxObjectState createState() => _CheckBoxObjectState();
+// }
 
-class _CheckBoxObjectState extends State<CheckBoxObject> {
-  bool checkValue = false;
+// class _CheckBoxObjectState extends State<CheckBoxObject> {
+  final bool checkValue;
 
-  void checkBoxCallBack(bool value) {
-    setState(() {
-      checkValue = value;
-      print(checkValue);
-    });
-  }
+  // void checkBoxCallBack(bool value) {
+  //   setState(() {
+  //     checkValue = value;
+  //     print(checkValue);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class _CheckBoxObjectState extends State<CheckBoxObject> {
     // );
     return ListTile(
       title: Text(
-        widget.checkBoxText,
+        checkBoxText,
         style: checkValue ? TextStyle(decoration: TextDecoration.lineThrough) : null,
       ),
       trailing: TaskCheckBox(
@@ -52,7 +54,7 @@ class _CheckBoxObjectState extends State<CheckBoxObject> {
         //     print(checkValue);
         //   });
         // },
-        toggleCallBack: checkBoxCallBack,
+        toggleCallBack: toggleCallBack,
       ),
     );
   }

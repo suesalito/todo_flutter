@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:todo_flutter/constants.dart';
 
 class ButtomSheetScreen extends StatelessWidget {
+  String newTaskName = '';
+  final messageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,10 +33,12 @@ class ButtomSheetScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(25),
               child: TextField(
+                controller: messageController,
                 autofocus: true, // make the input curcor active right away
                 cursorColor: Colors.cyan,
                 onChanged: (value) {
                   print(value);
+                  newTaskName = value;
                 },
                 decoration: kMessageTextFieldDecoration,
               ),
@@ -46,7 +51,10 @@ class ButtomSheetScreen extends StatelessWidget {
                 'Add',
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                //messageController.clear(); // somehow the buttomsheet got clear by itself. so no need to clear by controller.
+                return Navigator.pop(context, newTaskName);
+              },
             )
           ],
         ),
