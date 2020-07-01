@@ -19,97 +19,101 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> listTasks = Provider.of<TaskData>(context).listTasks;
+    //List<Task> listTasks = Provider.of<TaskData>(context).listTasks;
     //TaskData x = Provider.of<TaskData>(context, listen: false); // can define like this.
 
-    return Scaffold(
-      backgroundColor: Colors.pink,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final String returnName = await showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent, //set the edges transparent. better than set it hard code ARGB
-            //backgroundColor: Color.fromARGB(255, 117, 117, 117),
-            builder: (context) {
-              return ButtomSheetScreen();
+    return Consumer<TaskData>(
+      builder: (context, taskData, child) {
+        return Scaffold(
+          backgroundColor: Colors.pink,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              final String returnName = await showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent, //set the edges transparent. better than set it hard code ARGB
+                //backgroundColor: Color.fromARGB(255, 117, 117, 117),
+                builder: (context) {
+                  return ButtomSheetScreen();
+                },
+              );
+              if (returnName != null && returnName != '') {
+                print(returnName);
+                //addListTasks(returnName);
+                taskData.addListTasks(returnName);
+              }
             },
-          );
-          if (returnName != null && returnName != '') {
-            print(returnName);
-            //addListTasks(returnName);
-            Provider.of<TaskData>(context, listen: false).addListTasks(returnName);
-          }
-        },
-        backgroundColor: Colors.pink,
-        child: Icon(Icons.add),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                CircleAvatar(
-                  child: Icon(Icons.list),
-                  backgroundColor: Colors.white,
-                  radius: 30,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Todoey',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${Provider.of<TaskData>(context).listTasks.length} Tasks',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              ],
-            ),
+            backgroundColor: Colors.pink,
+            child: Icon(Icons.add),
           ),
-          Expanded(
-            child: Container(
-              child: ListViewObject(
-                //listTasks: listTasks,
-                listTasks: List<Task>.generate(listTasks.length, (int index) {
-                  return Task(
-                      // name: Provider.of<TaskData>(context, listen: false).listTasks[index].name,
-                      // isDone: Provider.of<TaskData>(context, listen: false).listTasks[index].isDone,
-                      // toggleCallBack: () {
-                      //   setState(() {
-                      //     Provider.of<TaskData>(context, listen: false).listTasks[index].toggleDone();
-                      //   });
-                      // });
-                      name: listTasks[index].name,
-                      isDone: listTasks[index].isDone,
-                      toggleCallBack: () {
-                        setState(() {
-                          listTasks[index].toggleDone();
-                        });
-                      });
-                }),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CircleAvatar(
+                      child: Icon(Icons.list),
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Todoey',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '${Provider.of<TaskData>(context).listTasks.length} Tasks',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // height: 300,
-            ),
-          )
-        ],
-      ),
+              Expanded(
+                child: Container(
+                  child: ListViewObject(
+                    //listTasks: listTasks,
+                    listTasks: List<Task>.generate(taskData.listTasks.length, (int index) {
+                      return Task(
+                          // name: Provider.of<TaskData>(context, listen: false).listTasks[index].name,
+                          // isDone: Provider.of<TaskData>(context, listen: false).listTasks[index].isDone,
+                          // toggleCallBack: () {
+                          //   setState(() {
+                          //     Provider.of<TaskData>(context, listen: false).listTasks[index].toggleDone();
+                          //   });
+                          // });
+                          name: taskData.listTasks[index].name,
+                          isDone: taskData.listTasks[index].isDone,
+                          toggleCallBack: () {
+                            //setState(() {
+                            taskData.toggleDoneByIndex(index);
+                            //});
+                          });
+                    }),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  // height: 300,
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

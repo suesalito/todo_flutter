@@ -9,5 +9,6 @@ class Task {
 
   void toggleDone() {
     isDone = !isDone;
+    //notifyListeners();
   }
 }

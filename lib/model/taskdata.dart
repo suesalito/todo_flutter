@@ -14,4 +14,9 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
     //});
   }
+
+  void toggleDoneByIndex(int index) {
+    listTasks[index].isDone = !listTasks[index].isDone;
+    notifyListeners();
+  }
 }
