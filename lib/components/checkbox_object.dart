@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CheckBoxObject extends StatelessWidget {
-  const CheckBoxObject({Key key, @required this.checkBoxText, @required this.checkValue, @required this.toggleCallBack})
+  const CheckBoxObject(
+      {Key key,
+      @required this.checkBoxText,
+      @required this.checkValue,
+      @required this.toggleCallBack,
+      @required this.longPressedCallBack})
       : super(key: key);
 
   final String checkBoxText;
   final ValueChanged<bool> toggleCallBack;
+  final Function longPressedCallBack;
 
 //   @override
 //   _CheckBoxObjectState createState() => _CheckBoxObjectState();
@@ -41,6 +47,7 @@ class CheckBoxObject extends StatelessWidget {
     //   ),
     // );
     return ListTile(
+      onLongPress: longPressedCallBack,
       title: Text(
         checkBoxText,
         style: checkValue ? TextStyle(decoration: TextDecoration.lineThrough) : null,

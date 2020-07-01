@@ -55,22 +55,22 @@ class ListViewObject extends StatelessWidget {
     //   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
     //   children: createCheckBoxList(), // -> This is completely work but Listview has the ListviewBuilder to help this case
     // so that you dont have to worry about to write the for loop yourself.
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onLongPress: () {
-            print('deleted Task ${index + 1}');
-            Provider.of<TaskData>(context, listen: false).deleteListTasks(index);
-          },
-          child: CheckBoxObject(
-              checkBoxText: listTasks[index].name,
-              checkValue: listTasks[index].isDone,
+    return Consumer<TaskData>(builder: (context, taskdata, child) {
+      return ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        itemBuilder: (context, index) {
+          return CheckBoxObject(
+              longPressedCallBack: () {
+                Provider.of<TaskData>(context, listen: false).deleteListTasks(index);
+              },
+              checkBoxText: taskdata.listTasks[index].name,
+              checkValue: taskdata.listTasks[index].isDone,
               // toggleCallBack: (value){
               //   listTasks[index].toggleDone();
               // },
               toggleCallBack: (value) {
-                listTasks[index].toggleCallBack();
+                //print(1);
+                taskdata.toggleDoneByTask(taskdata.listTasks[index]);
               }
               // toggleCallBack: (bool value) {
               //   // setState(
@@ -79,11 +79,12 @@ class ListViewObject extends StatelessWidget {
               //   //   },
               //   // );
               // },
-              ),
-        );
-      },
-      itemCount: listTasks.length, //when you use the listview.builder, you have to specific lenght of the object.
-    );
+              );
+        },
+        itemCount:
+            taskdata.listTasks.length, //when you use the listview.builder, you have to specific lenght of the object.
+      );
+    });
     // ),
     // );
   }
