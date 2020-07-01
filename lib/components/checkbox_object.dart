@@ -80,6 +80,7 @@ class TaskCheckBox extends StatelessWidget {
       activeColor: Colors.pink,
       value: checkValue,
       hoverColor: Colors.pink,
+
       // onChanged: (bool newValue) {
       //   setState(() {
       //     checkValue = newValue;

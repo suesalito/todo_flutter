@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/checkbox_object.dart';
 import 'package:todo_flutter/model/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_flutter/model/taskdata.dart';
 
 class ListViewObject extends StatelessWidget {
 //   const ListViewObject({
@@ -56,23 +58,29 @@ class ListViewObject extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       itemBuilder: (context, index) {
-        return CheckBoxObject(
-            checkBoxText: listTasks[index].name,
-            checkValue: listTasks[index].isDone,
-            // toggleCallBack: (value){
-            //   listTasks[index].toggleDone();
-            // },
-            toggleCallBack: (value) {
-              listTasks[index].toggleCallBack();
-            }
-            // toggleCallBack: (bool value) {
-            //   // setState(
-            //   //   () {
-            //   //     listTasks[index].toggleDone();
-            //   //   },
-            //   // );
-            // },
-            );
+        return GestureDetector(
+          onLongPress: () {
+            print('deleted Task ${index + 1}');
+            Provider.of<TaskData>(context, listen: false).deleteListTasks(index);
+          },
+          child: CheckBoxObject(
+              checkBoxText: listTasks[index].name,
+              checkValue: listTasks[index].isDone,
+              // toggleCallBack: (value){
+              //   listTasks[index].toggleDone();
+              // },
+              toggleCallBack: (value) {
+                listTasks[index].toggleCallBack();
+              }
+              // toggleCallBack: (bool value) {
+              //   // setState(
+              //   //   () {
+              //   //     listTasks[index].toggleDone();
+              //   //   },
+              //   // );
+              // },
+              ),
+        );
       },
       itemCount: listTasks.length, //when you use the listview.builder, you have to specific lenght of the object.
     );

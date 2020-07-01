@@ -69,7 +69,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       ),
                     ),
                     Text(
-                      '${Provider.of<TaskData>(context).listTasks.length} Tasks',
+                      '${taskData.taskCount} Tasks',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -95,7 +95,7 @@ class _TasksScreenState extends State<TasksScreen> {
                           isDone: taskData.listTasks[index].isDone,
                           toggleCallBack: () {
                             //setState(() {
-                            taskData.toggleDoneByIndex(index);
+                            taskData.toggleDoneByTask(taskData.listTasks[index]);
                             //});
                           });
                     }),
