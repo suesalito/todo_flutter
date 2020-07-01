@@ -33,9 +33,16 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteListTasks(index) {
+  void deleteListByIndex(index) {
     //setState(() {
     _listTasks.removeAt(index);
+    notifyListeners();
+    //});
+  }
+
+  void deleteListByTask(Task task) {
+    //setState(() {
+    _listTasks.remove(task);
     notifyListeners();
     //});
   }

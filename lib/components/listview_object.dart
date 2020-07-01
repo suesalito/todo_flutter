@@ -61,7 +61,9 @@ class ListViewObject extends StatelessWidget {
         itemBuilder: (context, index) {
           return CheckBoxObject(
               longPressedCallBack: () {
-                Provider.of<TaskData>(context, listen: false).deleteListTasks(index);
+                //taskdata.deleteListByIndex(index);
+                // ^^ work too, but with index, below is delete by Task.
+                taskdata.deleteListByTask(taskdata.listTasks[index]);
               },
               checkBoxText: taskdata.listTasks[index].name,
               checkValue: taskdata.listTasks[index].isDone,
