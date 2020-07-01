@@ -1,22 +1,31 @@
+import 'dart:collection';
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'task.dart';
 
 class TaskData extends ChangeNotifier {
-  List<Task> listTasks = [
+  List<Task> _listTasks = [
     Task(name: 'Buy Milk', isDone: false),
     // Task(name: 'Buy Chocolate', isDone: false),
     // Task(name: 'Buy FFXIV', isDone: false)
   ];
 
+  // This is to create the ListTasks to be private and cannot change.
+  // check the reasons behind in the :Adding To-Do List Task chapter by Angela.
+  UnmodifiableListView<Task> get listTasks {
+    return UnmodifiableListView(_listTasks);
+  }
+
   void addListTasks(String newTask) {
     //setState(() {
-    listTasks.add(Task(name: newTask, isDone: false));
+    _listTasks.add(Task(name: newTask, isDone: false));
     notifyListeners();
     //});
   }
 
   void toggleDoneByIndex(int index) {
-    listTasks[index].isDone = !listTasks[index].isDone;
+    _listTasks[index].isDone = !_listTasks[index].isDone;
     notifyListeners();
   }
 }
