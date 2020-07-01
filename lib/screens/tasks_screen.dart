@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/listview_object.dart';
 import 'package:todo_flutter/screens/buttomsheetscreen.dart';
 import 'package:todo_flutter/model/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_flutter/model/taskdata.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -9,20 +11,17 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<Task> listTasks = [
-    Task(name: 'Buy Milk', isDone: false),
-    Task(name: 'Buy Chocolate', isDone: false),
-    Task(name: 'Buy FFXIV', isDone: false)
-  ];
-
-  void addListTasks(String newTask) {
-    setState(() {
-      listTasks.add(Task(name: newTask, isDone: false));
-    });
-  }
+  // void addListTasks(String newTask) {
+  //   setState(() {
+  //     listTasks.add(Task(name: newTask, isDone: false));
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    List<Task> listTasks = Provider.of<TaskData>(context).listTasks;
+    //TaskData x = Provider.of<TaskData>(context, listen: false); // can define like this.
+
     return Scaffold(
       backgroundColor: Colors.pink,
       floatingActionButton: FloatingActionButton(
@@ -38,7 +37,8 @@ class _TasksScreenState extends State<TasksScreen> {
           );
           if (returnName != null && returnName != '') {
             print(returnName);
-            addListTasks(returnName);
+            //addListTasks(returnName);
+            Provider.of<TaskData>(context, listen: false).addListTasks(returnName);
           }
         },
         backgroundColor: Colors.pink,
@@ -67,7 +67,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${Provider.of<TaskData>(context).listTasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -82,6 +82,13 @@ class _TasksScreenState extends State<TasksScreen> {
                 //listTasks: listTasks,
                 listTasks: List<Task>.generate(listTasks.length, (int index) {
                   return Task(
+                      // name: Provider.of<TaskData>(context, listen: false).listTasks[index].name,
+                      // isDone: Provider.of<TaskData>(context, listen: false).listTasks[index].isDone,
+                      // toggleCallBack: () {
+                      //   setState(() {
+                      //     Provider.of<TaskData>(context, listen: false).listTasks[index].toggleDone();
+                      //   });
+                      // });
                       name: listTasks[index].name,
                       isDone: listTasks[index].isDone,
                       toggleCallBack: () {

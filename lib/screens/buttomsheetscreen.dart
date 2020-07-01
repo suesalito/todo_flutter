@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:todo_flutter/constants.dart';
 
 class ButtomSheetScreen extends StatelessWidget {
-  String newTaskName = '';
   final messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    String newTaskName = '';
     return Container(
       decoration: BoxDecoration(
         color: Colors.pink[50],
